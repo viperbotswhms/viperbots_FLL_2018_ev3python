@@ -19,7 +19,6 @@ import Run4
 
 from time import sleep
 
-
 def execute_run_bycode_bybutton(button_name):
     """
     Function to select which run to execute by pressing of different buttons on the EV3
@@ -41,7 +40,6 @@ def execute_run_bycode_bybutton(button_name):
     elif Robot.button.check_buttons(button_name) == Robot.button.down:
         Robot.sound.speak('Down button pressed calling Run4')
         Run4.execute_run4()
-
 
 def execute_run_bycode():
     """

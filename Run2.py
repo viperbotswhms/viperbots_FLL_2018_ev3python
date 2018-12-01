@@ -1,13 +1,21 @@
+from time import sleep
+
+#Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
+#Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
+
+#Run2.py - Steps for Run 2 execution corresponding to pseuedo code. Check run diagram in website to match
+
 import Robot
 import Constants
 import ResetRobot
 import Gyro
 import CalibrateRobot
 
-from time import sleep
+def M06_ConeModule():
+    """
+    1. Start robot 2A at angle pointing to Tube module missions and move till tube module is inserted and sticks. (M06-2 – 16 points)
 
-def M07_ConeModule():
-
+    """
     #setting gyro params
     Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
     
@@ -31,6 +39,12 @@ def M07_ConeModule():
     
 
 def M04_CraterCrossing():
+    """
+    2. Move backward in curve till back of robot is parallel to south wall and position is slightly away from front of crater crossing. 
+    3. Move forward till plate 2C with vehicle 2D is aligned on top of crater crossing
+    4. Operate left motor to release slip gear to push vehicle across crater crossing. (M04-1 – 20 points)
+
+    """
 
     Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
 
@@ -57,6 +71,13 @@ def M04_CraterCrossing():
     Robot.sound.speak('Crater crossing accomplished')
 
 def M09_StrengthBar():
+    """
+    5. Move robot 2A forward along path for front to be aligned to strength mission 
+    6. Move right motor to lower attachment 2B to lowest position
+    7. Move forward to position 2B below strength bar
+    8. Operate right motor to lift strength bar to top (M09-1 – 16 points)
+
+    """
     Robot.sound.speak('Executing Mission 9 Strength bar')
     Robot.attachment_right.on_for_rotations(100,20)
     Robot.attachment_right.off()
@@ -69,6 +90,11 @@ def M09_StrengthBar():
     Robot.attachment_right.off()
 
 def M03_3DPrintingBackup():
+    """
+    9. Move backward in path to align to 3D Printer
+    10. Operate right motor to put core sample on the 3D printer, ejecting red brick and dropping on the bottom plate. (M03-1 – 18 points)
+
+    """
     Robot.sound.speak('Executing Mission 3 3d Printing')
     Robot.attachment_right.on_for_rotations(100,10.5)
     Robot.attachment_right.off()
@@ -81,6 +107,9 @@ def M03_3DPrintingBackup():
 
 #M14–Meteoroid Deflection
 def M14_MeteroidDeflection():
+    """
+    11. Go on path aligning to push meteoroid (M14-1 – 12 points)
+    """
     #moving back from 3D printer
     Robot.steer_pair.on_for_rotations(0, -25, 0.5)
     Robot.steer_pair.off()
@@ -91,14 +120,16 @@ def M14_MeteroidDeflection():
     pass
 
 def run2():
-    
+    """
+    Execute Run 2 missions in order
+    """    
     #CalibrateRobot.calibrate_gyro()
     ResetRobot.reset_attachment_motors()
     ResetRobot.reset_wheel_motors()
     CalibrateRobot.calibrate_gyro()
 
-    #M07-cone module
-    M07_ConeModule()
+    #M06-cone module
+    M06_ConeModule()
 
     #crater crossing
     M04_CraterCrossing()
@@ -111,11 +142,9 @@ def run2():
     #M14 - Meteor Deflection
     M14_MeteroidDeflection()
    
-   
-              
-
 def execute_run2():
+    """
+    Main execute function for Run 2
+    """
     Robot.sound.speak('Executing Run2')
     run2()
-
-

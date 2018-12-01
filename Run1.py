@@ -3,7 +3,7 @@ from time import sleep
 #Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
 #Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
 
-#Run1.py - Steps for Run 1 execution corresponding to pseuedo code
+#Run1.py - Steps for Run 1 execution corresponding to pseuedo code. Check run diagram in website to match
 
 #Import statements 
 import Robot
@@ -21,6 +21,15 @@ Robot.bottom_cl_left.mode = Constants.MODE_COL_REFLECT
 
 #Payload and solar panel mission
 def M01_M02():
+    """
+    1. Rotate right motor counterclockwise to rotate long pole attachment F to back of robot.
+    2. Move robot forward with independent attachment on the front till white line is detected on the left color sensor. Wall hugger would release out of Jig 1 and class the West wall.
+    3. Move robot slowly forward so that independent attachment is close enough to the ramp such that extension D lifts the end of ramp and allows Vehicle Payload to roll down. (M01-1 : 22 points)
+    4. Move robot forward to align forklift C with crew payload and supply payload on top of ramp. (The solar panel should be in pushed out mode at this time using extension B. (M02-1: 18 points)
+    5. Operate left motor clockwise to push forklift C down such that the payloads are on ramp
+    6. Move robot backward till the crew and supply payload are free. (M01-2 : 14 + M01-3: 10 points)
+
+    """
     Robot.robot_gyro.mode = Constants.MODE_GYRO_ANG
     #Robot.sound.speak('Executing Misson 1 and Mission 2')
 
@@ -47,19 +56,14 @@ def M01_M02():
     #Robot.sound.speak('Space Travel and solar panel accomplished')
     
 
-#Extraction
-
-def M05_trial():
-    #Robot.sound.speak('Executing extraction mission')
-    #Robot.steer_pair.on_for_rotations(0,25,1.84) #Moves back
-    #Robot.steer_pair.off()
-    #Robot.steer_pair.on_for_rotations(-50,15,0.869)
-    #Robot.steer_pair.off()
-    #Robot.steer_pair.on_for_rotations(0, 20, 3.05)
-    pass
-
-
 def M05():
+    """
+    7.Operate left motor anticlockwise to push forklift C up and box cage E is held up
+    8.Move backward on path around such that robot back  with cage E is aligned to be on top of core site 
+    9.Operate left motor clockwise to forklift C push box cage E on top of core site covering the 4 core samples
+    10.Move robot backward to pull core samples out of shaft (M05-1 : 16 points)
+
+    """
     Robot.robot_gyro.mode = Constants.MODE_GYRO_ANG
     #Robot.sound.speak('Executing extraction mission')
     #Robot.steer_pair.on_for_rotations(0,25,1.9) #Moves back
@@ -88,9 +92,16 @@ def M05():
     Robot.steer_pair.off()
     #Robot.sound.speak('Extraction Mission accomplished')
     
-
-
 def MO7_Gerhard():
+    """
+    11. Move back ward further till end of long pole F is positioned next to loop for Gerard.
+    12. Rotate robot counter clockwise so that end of long pole F is able to light Gerard on loop
+    13. Rotate right motor counter clockwise so that Gerard is picked up by long pole F and raised above the Air lock chamber
+    14. Rotate robot clock clockwise so that Gerard is positioned above Airlock chamber
+    15. Rotate right motor clockwise so that Gerard is lowered to the Airlock chamber and long pole F is not holding the loop
+    16. Rotate robot counter clockwise so that long pole F releases loop. (M07-1:18 + M07-2: 4 points)
+
+    """
     #Robot.sound.speak('Lets save gerhard')
     Robot.attachment_right.on_for_rotations(-15, 0.7) #Lifts hook
     Robot.steer_pair.on_for_rotations(0, 15, 0.5) #Moves teensy bit forward
@@ -110,6 +121,9 @@ def MO7_Gerhard():
     #Robot.sound.speak('I saved Gerhard')
 
 def backup_return():
+    """
+    17. Move robot forward on path back to base with all samples inside base. Gas core sample in base (M05-2 : 10 points)
+    """
     #Robot.steer_pair.on_for_rotations(-15,15,1)
     Robot.left_wheel.on_for_rotations(-15, 0.25)
     Robot.steer_pair.on_for_rotations(0,-50, 4)
@@ -118,6 +132,9 @@ def backup_return():
 #def run1_return():
 
 def run1():
+    """
+    Execute Run 1 missions in order
+    """
     #Reseting motors
     ResetRobot.reset_wheel_motors()
     ResetRobot.reset_attachment_motors()
@@ -132,16 +149,9 @@ def run1():
     #Back to base before Gerhard (Remove comment if necessary)
     backup_return()
 
-
-    
-   
-
-
-
-
-
-   
-
 def execute_run1():
+    """
+    Main execute function for Run 1
+    """
     Robot.sound.speak('Executing Run1')
     run1()

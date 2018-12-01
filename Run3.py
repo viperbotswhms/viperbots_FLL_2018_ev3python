@@ -1,14 +1,25 @@
+from time import sleep
+
+#Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
+#Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
+
+#Run3.py - Steps for Run 3 execution corresponding to pseuedo code. Check run diagram in website to match
+
 import Robot
 import Constants
 import ResetRobot
 import Gyro
 import CalibrateRobot
 
-from time import sleep
-
 #M13- observatory
 
 def M13_Observatory():
+    """
+    1. Rotate right motor counter clockwise to raise the lever 3C upward after getting out of base (to counter 12” height rule)
+    2. Move robot eastward forward till white line is detected on the right color sensor. Jerk motion at the start should push the vertical lever of attachment 3E forward and fall
+    3. Move forward till edge of escape velocity. The Observatory arm should be pushed at this time to orange bar (M13 – 1,2,3 – 16 +2+2 points)
+
+    """
     #Robot.sound.speak('Exexuting Mission 13 observatory')
 
     #Move foraward until outside of base for mesasuring white line
@@ -25,10 +36,14 @@ def M13_Observatory():
     Robot.steer_pair.off() #stop
     #Robot.sound.speak('Mission 13 Observatory accomplished')
 
-
 #M11 -Escape Velocity
 
 def M11_EscapeVelocity():
+    """
+    4. Move back till white line is detected on right color sensor and enough to align striker to hit space craft mission
+    5. Rotate right motor clockwise so that lever 3C hits striker with enough force to push space craft on top (M11-1-24 points). Raise lever 3C to full height.
+
+    """
     #Robot.sound.speak('Executing escape velocity')
     Robot.steer_pair.on_for_rotations(0,20,0.38) #move back a little
     Robot.steer_pair.off() #stop
@@ -43,8 +58,13 @@ def M11_EscapeVelocity():
     #Robot.sound.speak('Escape velocity accomplished')
 
 #M10 - Food production
-
 def M10_FoodProduction():
+    """
+    6. Turn ~60 degrees counter clock wise (use gyro sensor) and go forward till right color sensor detects white line 
+    7. Turn ~120 degrees clockwise (use gyro sensor) such that Arm C is pointing to striker and robot A is in the middle
+    8. Move backward such that both wheels are aligned parallel to the top part of T line, using color sensor and alignment movement.
+    9. Slowly move further lower part of bar D pushes bar till grey is dropped after green but before tan (M10-1: 16 points)
+    """
     #Robot.sound.speak('Mission food production')
     Robot.steer_pair.on_for_rotations(0,20,0.38) #move back a little
     Robot.steer_pair.off() #stop
@@ -70,6 +90,13 @@ def M10_FoodProduction():
     #Robot.sound.speak('Mission 10 food production completed')
 
 def M11_EscapeVelocity_PostFoodProduction():
+    """
+    6. Turn ~60 degrees counter clock wise (use gyro sensor) and go forward till right color sensor detects white line 
+    7. Turn ~120 degrees clockwise (use gyro sensor) such that Arm C is pointing to striker and robot A is in the middle
+    8. Move backward such that both wheels are aligned parallel to the top part of T line, using color sensor and alignment movement.
+    9. Slowly move further lower part of bar D pushes bar till grey is dropped after green but before tan (M10-1: 16 points)
+    """
+
     Robot.steer_pair.on_for_rotations(0,-25,1.17)
     Robot.steer_pair.off
      #smaaashing
@@ -81,10 +108,14 @@ def M11_EscapeVelocity_PostFoodProduction():
     sleep(0.5)
     #Robot.sound.speak('Escape velocity accomplished')bot
 
-
 #M15 - Lander
 def M15_Lander():
-    
+    """
+    10. Move forward and Rotate clockwise ~30 degrees such that bar D is pointing to  Lander module.
+    11. Move robot A backward such that lander mission bar is pushed and the lander is rested on to of box B.
+    12. Move robot A back to base with lander (M15-1 : 16 points)
+
+    """
     #moving away from food production
     Robot.steer_pair.on_for_rotations(0,-20,1.35)
 
@@ -102,6 +133,13 @@ def M15_Lander():
 
 #M15 - Lander
 def M12_SatelliteOrbits():
+    """
+    Back up plan : 
+    Have Satellites V and C hooked to either sides of the box 3B. 
+    As step 16, move forward such that satellites are over the outer orbit from base (M12-2 : 16 points)
+    Use robot to move Satellite X to outer orbit (M12-1 – 8 points)
+
+    """
     
     #moving away from escape velocity
     #Robot.steer_pair.on_for_rotations(0,25,0.1)
@@ -113,7 +151,6 @@ def M12_SatelliteOrbits():
     #Robot.right_wheel.on_for_rotations(-27,0.45)
     Robot.right_wheel.on_for_rotations(-30,0.45)
     Robot.right_wheel.off()
-
 
 
     #move back straight
@@ -129,6 +166,10 @@ def M12_SatelliteOrbits():
 
 #Returning to base
 def run2_returnbase():
+    """
+    12. Move robot A back to base with lander (M15-1 : 16 points)
+
+    """
 
     #Robot.sound.speak('Returning to base')
     #while not Robot.bottom_cl_right.reflected_light_intensity >= Constants.WHITE_LIGHT_INTENSITY :
@@ -148,15 +189,15 @@ def run2_returnbase():
     #straight to base
     #Robot.steer_pair.on_for_rotations(0,-30,5)
 
-
 #function to execute the run2 mission plan
 def run3():
-
+    """
+    Execute Run 3 missions in order
+    """    
     #Resetting the motors
     ResetRobot.reset_wheel_motors()
     ResetRobot.reset_attachment_motors()
     CalibrateRobot.calibrate_gyro()
-
 
     #M13 -Observatory
     M13_Observatory()
@@ -180,9 +221,11 @@ def run3():
     #Returning to base
     #run2_returnbase()
 
-
     
 #function that will be called from other modules
 def execute_run3():
+    """
+    Main execute function for Run 2
+    """
     #Robot.sound.speak('Executing Run3')
     run3()

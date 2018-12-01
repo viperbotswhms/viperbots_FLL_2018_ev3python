@@ -38,7 +38,6 @@ GYROSENSOR_PORT = INPUT_3
 CLK_WISE='clock_wise' #positive speed
 ANTI_CLK_WISE='anti_clck_wise' #negative speed
 
-
 #Creat objects for the ev3 buttons, motors and sensors. Only one object will be created for each physical object and used in every program
 
 #LARGEMOTORS USED FOR WHEELS
@@ -68,4 +67,3 @@ robot_gyro=GyroSensor(GYROSENSOR_PORT)
 #Create sound and button objects for EV3
 sound = Sound()
 button = Button()
-

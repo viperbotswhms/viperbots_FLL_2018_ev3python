@@ -1,14 +1,15 @@
-import Robot
-import Constants
-import CalibrateRobot
-import ResetRobot
-
 from time import sleep
 
 #Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
 #Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
 
 #Gyro.py - Gyro execution functions
+
+import Robot
+import Constants
+import CalibrateRobot
+import ResetRobot
+
 
 from ev3dev2.motor import SpeedNativeUnits
 
@@ -59,7 +60,6 @@ def gyro_mov_on_for_rotations(speed,rotations,current_zero_angle):
                 Robot.steer_pair.on_for_rotations(steering,speed,rot)
                 rot=rot+0.5
 
-
 #proportional correction
 def proportional_correction(desired_value,current_value,kp_factor):
         """
@@ -97,7 +97,6 @@ def PID_correction(desired_value,current_value,kp_factor,ki_factor,kd_factor):
         integral=integral+error
 
         I_correction = ki * integral
-
 
         derivative = error - last_error
 
@@ -140,7 +139,6 @@ def gyro_mov_straight_until_white_left(speed):
 
                 I_correction = ki * integral
 
-
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -182,7 +180,6 @@ def gyro_mov_straight_until_white_right(speed):
                 integral=integral+error
 
                 I_correction = ki * integral
-
 
                 derivative = error - last_error
 
@@ -227,7 +224,6 @@ def gyro_mov_straight_until_white_left_angled(speed):
 
                 I_correction = ki * integral
 
-
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -270,7 +266,6 @@ def gyro_mov_straight_until_white_right_angled(speed):
 
                 I_correction = ki * integral
 
-
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -308,7 +303,6 @@ def gyro_mov_on_for_rotation_PCorrection(speed,rotations,kp):
 
         I_correction = ki * integral
 
-
         derivative = error - last_error
 
         D_correction = kd *error
@@ -345,7 +339,6 @@ def gyro_mov_on_for_rotation_PID(speed,rotations,kp,ki,kd):
         integral=integral+error
 
         I_correction = ki * integral
-
 
         derivative = error - last_error
 
@@ -391,7 +384,6 @@ def gyro_mov_on_for_rotation_PID_seconds(speed,seconds,kp,ki,kd):
 
         I_correction = ki * integral
 
-
         derivative = error - last_error
 
         D_correction = kd *error
@@ -430,7 +422,6 @@ def mov_on_angle_straight(delta_angle,speed,rotations,kp,ki,kd):
         integral=integral+error
 
         I_correction = ki * integral
-
 
         derivative = error - last_error
 
@@ -473,7 +464,6 @@ def test_PID():
 
                 I_correction = ki * integral
 
-
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -514,7 +504,6 @@ def test_PID_rotations(speed,rotations):
 
                 I_correction = ki * integral
 
-
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -532,3 +521,4 @@ def test_PID_rotations(speed,rotations):
 
 
 
+ 
