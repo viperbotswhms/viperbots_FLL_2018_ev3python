@@ -11,29 +11,34 @@ import ResetRobot
 import Gyro
 import CalibrateRobot
 
+
 def M06_ConeModule():
     """
     1. Start robot 2A at angle pointing to Tube module missions and move till tube module is inserted and sticks. (M06-2 – 16 points)
 
     """
     #setting gyro params
-    Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
+    #Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
     
-    current_zero_angle=Robot.robot_gyro.angle
+    #current_zero_angle=Robot.robot_gyro.angle
+    #sleep(0.2)
 
-    Robot.sound.speak('Executing Mission 7 cone module')
+    #Robot.sound.speak('Executing Mission 7 cone module')
     #Robot.steer_pair.on_for_rotations(0,-19.5,4.35)
 
-   #trying gyro         
-    Gyro.gyro_mov_on_for_rotations(-19.5,2.3,current_zero_angle)
+    #trying gyro         
+    #Gyro.gyro_mov_on_for_rotations(-19.5,2.3,current_zero_angle)
+    Robot.steer_pair.on_for_rotations(0, -40, 3.75)#4.45 Was combined value
+    Robot.steer_pair.on_for_rotations(0, -20, 0.7)
+    #Robot.steer_pair.on_for_rotations(11,
     #Gyro.gyro_mov_on_for_rotations_gain(-19,2.3,current_zero_angle,gain)
     #steering = Gyro.PID_steer
     #Robot.steer_pair.on_for_rotations(0,-50,2.5)
-   # while not Robot.bottom_cl_left.reflected_light_intensity >= Constants.WHITE_LIGHT_INTENSITY:
+    # while not Robot.bottom_cl_left.reflected_light_intensity >= Constants.WHITE_LIGHT_INTENSITY:
         #steering = Gyro.PID_steer
         #Robot.steer_pair.on(steering,-50)
 
-    Robot.sound.speak('Tube mission accomplished')
+    #Robot.sound.speak('Tube mission accomplished')
 
     Robot.steer_pair.off()
     
@@ -98,7 +103,7 @@ def M03_3DPrintingBackup():
     Robot.sound.speak('Executing Mission 3 3d Printing')
     Robot.attachment_right.on_for_rotations(100,10.5)
     Robot.attachment_right.off()
-    Robot.tank_pair.on_for_rotations(-20,-40,0.9)
+    Robot.tank_pair.on_for_rotations(-20,-40,0.8)
     Robot.tank_pair.off()
     Robot.steer_pair.on_for_rotations(0,10,1)
     Robot.attachment_left.on_for_rotations(-100,3)
@@ -148,3 +153,5 @@ def execute_run2():
     """
     Robot.sound.speak('Executing Run2')
     run2()
+
+

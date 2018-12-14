@@ -26,4 +26,3 @@ def calibrate_gyro():
         Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
         measured_angle=Robot.robot_gyro.angle
     #Robot.sound.speak('Gyro Calibrated')
-

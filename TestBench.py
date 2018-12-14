@@ -8,7 +8,10 @@ import Gyro
 
 from time import sleep
 
+#Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
+#Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
 
+#TestBench.py - Test programs for few functions on gyro, PID and motions
 
 
 def test_calibrateGyro():

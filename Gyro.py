@@ -1,15 +1,14 @@
+import Robot
+import Constants
+import CalibrateRobot
+import ResetRobot
+
 from time import sleep
 
 #Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
 #Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
 
 #Gyro.py - Gyro execution functions
-
-import Robot
-import Constants
-import CalibrateRobot
-import ResetRobot
-
 
 from ev3dev2.motor import SpeedNativeUnits
 
@@ -23,31 +22,13 @@ def check_steer_limit(steering):
                 steering = Constants.min_steering
         return steering
 
-def gyro_PCorrection_rotations_interval(speed,rotations,kp,current_zero_angle,delta_rotations):
-        """
-        Function for applying proportional correction
-        where robot movement issampled on intervals of rotations
-        
-        """
-        Robot.robot_gyro.mode = Constants.MODE_GYRO_ANG
-        measured_angle=Robot.robot_gyro.angle    
-        sleep(0.2)
-        rot=0+delta_rotations
-        while not rot>=rotations:
-                error=current_zero_angle-measured_angle        
-                correction=kp*error
-                steering=check_steer_limit(correction)
-                Robot.steer_pair.on_for_rotations(steering,speed,delta_rotations)
-                rot=rot+delta_rotations
-
 #move without drift for a certain rotations
-#used in Run2 conde module
+#used in Run2 tube module
 def gyro_mov_on_for_rotations(speed,rotations,current_zero_angle):
         """
         Function for applying proportional correction
         where robot movement is sampled on intervals of rotations
-        speicif for cone module mission
-        
+        specific for tube module mission
         """
         Robot.robot_gyro.mode = Constants.MODE_GYRO_ANG
         measured_angle=Robot.robot_gyro.angle    
@@ -60,11 +41,29 @@ def gyro_mov_on_for_rotations(speed,rotations,current_zero_angle):
                 Robot.steer_pair.on_for_rotations(steering,speed,rot)
                 rot=rot+0.5
 
+#consistant speed and direction
+def gyro_speed_direction_control_fwd(delta_angle,speed,rotations):
+        """
+        Function for  moving consistently at an angle specified by delta angle and speed.
+        """
+        Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
+        current_zero_angle=Robot.robot_gyro.angle
+        sleep(0.2)
+
+        #desired angle = current angle + delta angle
+        desired_angle=current_zero_angle+delta_angle
+
+        left_speed=desired_angle+speed
+        right_speed=desired_angle-speed
+
+        #move tank
+        Robot.tank_pair.on_for_rotations(left_speed,right_speed,rotations)
+
+
 #proportional correction
 def proportional_correction(desired_value,current_value,kp_factor):
         """
         Function for calcutatng the proportional correction for any movement
-        
         """
         target_value = desired_value
         current_value = current_value
@@ -78,7 +77,6 @@ def proportional_correction(desired_value,current_value,kp_factor):
 def PID_correction(desired_value,current_value,kp_factor,ki_factor,kd_factor):
         """
         Function for calculating the PID correction to be applied for steering value
-        
         """
         target_value = desired_value
         current_value = current_value
@@ -98,6 +96,7 @@ def PID_correction(desired_value,current_value,kp_factor,ki_factor,kd_factor):
 
         I_correction = ki * integral
 
+
         derivative = error - last_error
 
         D_correction = kd *error
@@ -114,7 +113,6 @@ def PID_correction(desired_value,current_value,kp_factor,ki_factor,kd_factor):
 def gyro_mov_straight_until_white_left(speed):
         """
         Function for PID corrected movement until white line is detected by the left color sensor
-        
         """
         
         #Robot.sound.speak('applying PID')
@@ -138,6 +136,7 @@ def gyro_mov_straight_until_white_left(speed):
                 integral=integral+error
 
                 I_correction = ki * integral
+
 
                 derivative = error - last_error
 
@@ -156,7 +155,6 @@ def gyro_mov_straight_until_white_left(speed):
 def gyro_mov_straight_until_white_right(speed):
         """
         Function for PID corrected movement until white line is detected by the right color sensor
-        
         """
         
         #Robot.sound.speak('applying PID')
@@ -181,6 +179,7 @@ def gyro_mov_straight_until_white_right(speed):
 
                 I_correction = ki * integral
 
+
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -198,7 +197,7 @@ def gyro_mov_straight_until_white_right(speed):
 def gyro_mov_straight_until_white_left_angled(speed):
         """
         Function for PID corrected movement until white line is detected by the left color sensor
-        Robot is moving at an inclined angle
+        Robot moving on a striaght path
         """
         
         #Robot.sound.speak('applying PID')
@@ -224,6 +223,7 @@ def gyro_mov_straight_until_white_left_angled(speed):
 
                 I_correction = ki * integral
 
+
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -240,7 +240,7 @@ def gyro_mov_straight_until_white_left_angled(speed):
 def gyro_mov_straight_until_white_right_angled(speed):
         """
         Function for PID corrected movement until white line is detected by the right color sensor
-        Robot movng at an inclined sstriaght path
+        Robot moving on a striaght path
         """
         
         #Robot.sound.speak('applying PID')
@@ -266,6 +266,7 @@ def gyro_mov_straight_until_white_right_angled(speed):
 
                 I_correction = ki * integral
 
+
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -280,7 +281,10 @@ def gyro_mov_straight_until_white_right_angled(speed):
                 Robot.steer_pair.on(steering,speed) 
 
 def gyro_mov_on_for_rotation_PCorrection(speed,rotations,kp):
-        
+        """
+        Function for PID corrected movement using proportional correction only
+        Robot moving on a striaght path
+        """   
         #Robot.sound.speak('applying PID')
         Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
         target_value = 0    
@@ -303,6 +307,7 @@ def gyro_mov_on_for_rotation_PCorrection(speed,rotations,kp):
 
         I_correction = ki * integral
 
+
         derivative = error - last_error
 
         D_correction = kd *error
@@ -317,6 +322,10 @@ def gyro_mov_on_for_rotation_PCorrection(speed,rotations,kp):
         Robot.steer_pair.on_for_rotations(steering,speed,rotations) 
 
 def gyro_mov_on_for_rotation_PID(speed,rotations,kp,ki,kd):
+        """
+        Function for PID corrected movement using P,I and D correction
+        Robot moving on a striaght path
+        """
         
         #Robot.sound.speak('applying PID')
         Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
@@ -340,6 +349,7 @@ def gyro_mov_on_for_rotation_PID(speed,rotations,kp,ki,kd):
 
         I_correction = ki * integral
 
+
         derivative = error - last_error
 
         D_correction = kd *error
@@ -355,9 +365,7 @@ def gyro_mov_on_for_rotation_PID(speed,rotations,kp,ki,kd):
 
 def gyro_mov_on_for_rotation_PID_seconds(speed,seconds,kp,ki,kd):
         """
-        Function for PID corrected movement 
-        movement sampled at seconds
-        
+        Function for PID corrected movement for seconds (time limited)       
         """
         
         #Robot.sound.speak('applying PID')
@@ -384,6 +392,7 @@ def gyro_mov_on_for_rotation_PID_seconds(speed,seconds,kp,ki,kd):
 
         I_correction = ki * integral
 
+
         derivative = error - last_error
 
         D_correction = kd *error
@@ -400,6 +409,9 @@ def gyro_mov_on_for_rotation_PID_seconds(speed,seconds,kp,ki,kd):
         #Robot.steer_pair.on_for_rotations(steering,speed,rotations) 
 
 def mov_on_angle_straight(delta_angle,speed,rotations,kp,ki,kd):
+        """
+        Function for PID corrected movement at an angle limited by rotations   
+        """
                 #Robot.sound.speak('applying PID')
         Robot.robot_gyro.mode=Constants.MODE_GYRO_ANG
         target_value = Robot.robot_gyro.angle + delta_angle
@@ -422,6 +434,7 @@ def mov_on_angle_straight(delta_angle,speed,rotations,kp,ki,kd):
         integral=integral+error
 
         I_correction = ki * integral
+
 
         derivative = error - last_error
 
@@ -464,6 +477,7 @@ def test_PID():
 
                 I_correction = ki * integral
 
+
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -504,6 +518,7 @@ def test_PID_rotations(speed,rotations):
 
                 I_correction = ki * integral
 
+
                 derivative = error - last_error
 
                 D_correction = kd *error
@@ -521,4 +536,3 @@ def test_PID_rotations(speed,rotations):
 
 
 
- 

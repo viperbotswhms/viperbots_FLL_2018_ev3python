@@ -17,7 +17,10 @@ import Run2
 import Run3
 import Run4
 
+import TestBench
+
 from time import sleep
+
 
 def execute_run_bycode_bybutton(button_name):
     """
@@ -27,19 +30,22 @@ def execute_run_bycode_bybutton(button_name):
 
     if Robot.button.check_buttons(button_name) == Robot.button.enter:
         Robot.sound.speak('center button pressed')
-        CalibrateRobot.calibrate_gyro()         
+        if Constants.TEST_MODE:
+            #Robot.sound.speak('Entering test mode')
+            TestBench.test_run()         
     elif Robot.button.check_buttons(button_name) == Robot.button.left :
-        Robot.sound.speak('Left button pressed calling Run1')
+        #Robot.sound.speak('Left button pressed calling Run1')
         Run1.execute_run1()
     elif Robot.button.check_buttons(button_name) == Robot.button.right:
-        Robot.sound.speak('Right button pressed calling Run2')
+        #Robot.sound.speak('Right button pressed calling Run2')
         Run2.execute_run2()
     elif Robot.button.check_buttons(button_name) == Robot.button.up:
-        Robot.sound.speak('Up button pressed calling Run3')
+        #Robot.sound.speak('Up button pressed calling Run3')
         Run3.execute_run3()
     elif Robot.button.check_buttons(button_name) == Robot.button.down:
-        Robot.sound.speak('Down button pressed calling Run4')
+        #Robot.sound.speak('Down button pressed calling Run4')
         Run4.execute_run4()
+
 
 def execute_run_bycode():
     """
@@ -59,7 +65,7 @@ def execute_run_bycode():
         
 #Main program starts here
 #Announce robot ready to start
-Robot.sound.speak('Robot Ready')
+#Robot.sound.speak('Robot Ready')
 
 #Main loop to run forever till escape button is pressed and program is ended
 #
