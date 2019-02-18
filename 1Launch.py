@@ -15,12 +15,10 @@ import Gyro
 import Run1
 import Run2
 import Run3
-import Run4
 
 import TestBench
 
 from time import sleep
-
 
 def execute_run_bycode_bybutton(button_name):
     """
@@ -28,11 +26,12 @@ def execute_run_bycode_bybutton(button_name):
     Input button name to the function
     """
 
+    #Test bench invoked in center button
     if Robot.button.check_buttons(button_name) == Robot.button.enter:
-        Robot.sound.speak('center button pressed')
+        #Robot.sound.speak('center button pressed')
         if Constants.TEST_MODE:
             #Robot.sound.speak('Entering test mode')
-            TestBench.test_run()         
+            TestBench.test_run() 
     elif Robot.button.check_buttons(button_name) == Robot.button.left :
         #Robot.sound.speak('Left button pressed calling Run1')
         Run1.execute_run1()
@@ -42,9 +41,6 @@ def execute_run_bycode_bybutton(button_name):
     elif Robot.button.check_buttons(button_name) == Robot.button.up:
         #Robot.sound.speak('Up button pressed calling Run3')
         Run3.execute_run3()
-    elif Robot.button.check_buttons(button_name) == Robot.button.down:
-        #Robot.sound.speak('Down button pressed calling Run4')
-        Run4.execute_run4()
 
 
 def execute_run_bycode():
@@ -52,38 +48,37 @@ def execute_run_bycode():
     Function to select which run to execute by the color code of the top pointing color sensor on Robot
     Each attachment is coded with a colored brick placed right above the color sensor
     """
-    if(Robot.top_cl.color_name == Constants.RED):
+
+    if(Robot.top_cl.color_name == Constants.RUN1_CODE):
         Run1.execute_run1()
-    elif (Robot.top_cl.color_name == Constants.YELLOW):
+    elif (Robot.top_cl.color_name == Constants.RUN2_CODE):
         Run2.execute_run2()
-    elif (Robot.top_cl.color_name == Constants.BLUE):
+    elif (Robot.top_cl.color_name == Constants.RUN3_CODE):
         Run3.execute_run3()
-    elif (Robot.top_cl.color_name == Constants.GREEN):
-        Run4.execute_run4()
     else:
-        Robot.sound.speak('ATTACHMENT CODE IS ON WITH NO ATTACHMENT')
+        Robot.sound.speak('I NEED MY ARMS')
         
 #Main program starts here
 #Announce robot ready to start
 #Robot.sound.speak('Robot Ready')
 
 #Main loop to run forever till escape button is pressed and program is ended
-#
+
 while True:
     while not Robot.button.any():
         Robot.sound.beep()
     else:
         #Selection code
         if Robot.button.any:
-            sleep(0.5)
+            sleep(0.3)
             #Selection of run by color coded attachment
             if Constants.ATTACHMENT_CODE:
                 execute_run_bycode()
-                Robot.sound.speak('Run completed')
+                #Robot.sound.speak('Run completed')
             else:
                 #Selection of run by pressing different buttons on eV3 
                 execute_run_bycode_bybutton(Robot.button.buttons_pressed)
-                Robot.sound.speak('Run completed')
+                #Robot.sound.speak('Run completed')
 else:
     pass
 

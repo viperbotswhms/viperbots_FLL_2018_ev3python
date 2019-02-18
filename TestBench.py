@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 
+#Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
+#Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
+
+#TestBench.py - Test programs for few functions on gyro, PID and motions
 import Robot
 import ResetRobot
 import Constants
 import CalibrateRobot
 import Gyro
-
 from time import sleep
-
-#Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
-#Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
-
-#TestBench.py - Test programs for few functions on gyro, PID and motions
-
 
 def test_calibrateGyro():
     CalibrateRobot.calibrate_gyro()
@@ -48,6 +45,8 @@ def test_move_seconds(speed,seconds):
     kd=0
     Gyro.gyro_mov_on_for_rotation_PID_seconds(speed,seconds,kp,ki,kd)
 
+def test_move_angle(delta_angle,speed,rotations):
+    Gyro.gyro_speed_direction_control_fwd(delta_angle,speed,rotations)
 
 def test_move_st_angle(delta_angle,speed,rotations):
     kp=0.6
@@ -81,4 +80,4 @@ def test_run():
         elif Robot.button.up:
             Robot.sound.speak('Exiting test loop')
             break
-
+#End of Test bench

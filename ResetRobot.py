@@ -6,6 +6,7 @@ import Constants
 
 #ResetRobot.py - Reset functions for robots and motors
 
+
 def reset_wheel_motors():
     Robot.right_wheel.reset()
     Robot.left_wheel.reset()
@@ -17,5 +18,3 @@ def reset_attachment_motors():
 def reset_robot():
     reset_wheel_motors()
     reset_attachment_motors()
-
-

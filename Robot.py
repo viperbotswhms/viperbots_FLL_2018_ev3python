@@ -1,4 +1,5 @@
 from time import sleep
+import sys
 
 #Copyright of Viperbots FLL team  http://sites.google.com/view/viperbotsofficial/
 #Can be freely used by any developors as long as you inform us on ViperbotsWHMS@gmail.com
@@ -18,7 +19,7 @@ from ev3dev2.sensor import INPUT_1,INPUT_2,INPUT_4
 from ev3dev2.sensor.lego import GyroSensor
 from ev3dev2.sensor import INPUT_3
 
-#import sound and button functions for EV3
+#Import sound and button functions for EV3
 from ev3dev2.sound import Sound
 from ev3dev2.button import Button
 
@@ -39,7 +40,7 @@ CLK_WISE='clock_wise' #positive speed
 ANTI_CLK_WISE='anti_clck_wise' #negative speed
 
 
-#Creat objects for the ev3 buttons, motors and sensors. Only one object will be created for each physical object and used in every program
+#Create objects for the ev3 buttons, motors and sensors. Only one object will be created for each physical object and used in every program
 
 #LARGEMOTORS USED FOR WHEELS
 #Create individual wheel objects
@@ -58,6 +59,7 @@ attachment_right=MediumMotor(MEDIUM_MOTOR_RIGHT)
 #TOP COLOR SENSOR IS USED FOR ATTACHMENT VERIFICATION
 #BOTTOM COLOR SENSORS ARE USED FOR WHITE LINE DETECTION
 #Create Color sensor objects
+
 top_cl=ColorSensor(COLORSENSOR_TOP)
 bottom_cl_right=ColorSensor(COLORSENSOR_BOTTOM_RIGHT)
 bottom_cl_left=ColorSensor(COLORSENSOR_BOTTOM_LEFT)
@@ -69,3 +71,10 @@ robot_gyro=GyroSensor(GYROSENSOR_PORT)
 sound = Sound()
 button = Button()
 
+#Debug print code
+def debug_print(*args, **kwargs):
+    '''Print debug messages to stderr.
+    This shows up in the output panel in VS Code.
+    '''
+    print(*args, **kwargs, file=sys.stderr)
+    #print ("Hello World")

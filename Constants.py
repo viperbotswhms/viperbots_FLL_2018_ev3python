@@ -1,4 +1,3 @@
-
 ON=True
 OFF=False
 
@@ -16,7 +15,10 @@ ATTACHMENT_CODE=ON
 #Bypass constant for running with or without sensors, for testing
 SENSOR=ON
 
-#Constant for debug on or off
+#Constant for test mode to be on or off
+TEST_MODE=ON
+
+#Constant for debug messages on or off
 DEBUG=True
 
 #Color sensor caliberation to the game table on white
@@ -45,6 +47,11 @@ MODE_GYRO_FAS = 'GYRO-FAS'
 MODE_GYRO_G_A = 'GYRO-G&A'
 MODE_GYRO_CAL = 'GYRO-CAL'
 
-#Steering values limit for motor action
+#Steering values limit
 max_steering = 100
 min_steering = -100
+
+#Attachment codes
+RUN1_CODE = RED
+RUN2_CODE = BLUE
+RUN3_CODE = YELLOW
